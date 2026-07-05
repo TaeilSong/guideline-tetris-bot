@@ -77,21 +77,23 @@ function scorePlacement(board, type, place) {
        + WEIGHTS.bumpiness * f.bumpiness;
 }
 
-export function bestMove(board, type, holdType, canHold) {
+export function bestMove(board, type, holdType, canHold, nextType) {
   let best = null;
+  // 후보 A: 현재 조각을 지금 놓는다
   for (const place of enumeratePlacements(board, type)) {
     const score = scorePlacement(board, type, place);
     if (!best || score > best.score) {
       best = { type, rotation: place.rotation, x: place.x, score, useHold: false };
     }
   }
+  // 후보 B: hold를 쓴다. hold에 조각이 있으면 그 조각이, 비어 있으면 다음 조각이 활성이 된다.
   if (canHold) {
-    const alt = holdType ?? null;
-    if (alt) {
-      for (const place of enumeratePlacements(board, alt)) {
-        const score = scorePlacement(board, alt, place);
+    const heldResult = holdType ?? nextType ?? null;
+    if (heldResult) {
+      for (const place of enumeratePlacements(board, heldResult)) {
+        const score = scorePlacement(board, heldResult, place);
         if (!best || score > best.score) {
-          best = { type: alt, rotation: place.rotation, x: place.x, score, useHold: true };
+          best = { type: heldResult, rotation: place.rotation, x: place.x, score, useHold: true };
         }
       }
     }

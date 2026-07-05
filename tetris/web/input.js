@@ -45,7 +45,7 @@ function afterAction() {
 function botStep() {
   if (!engine.active) return;
   if (!botPlan) {
-    botPlan = bestMove(engine.board, engine.active.type, engine.hold, engine.canHold);
+    botPlan = bestMove(engine.board, engine.active.type, engine.hold, engine.canHold, engine.queue[0]);
     if (botPlan.useHold) { engine.holdPiece(); botPlan.useHold = false; afterAction(); return; }
   }
   const a = engine.active;

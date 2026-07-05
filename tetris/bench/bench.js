@@ -30,7 +30,7 @@ export function playOneGame(seed, maxPieces = 5000) {
   let reason = 'maxPieces';
   while (pieces < maxPieces) {
     if (engine.gameOver) { reason = 'gameover'; break; }
-    const move = bestMove(engine.board, engine.active.type, engine.hold, engine.canHold);
+    const move = bestMove(engine.board, engine.active.type, engine.hold, engine.canHold, engine.queue[0]);
     applyMove(engine, move);
     pieces++;
     if (engine.gameOver) { reason = 'gameover'; break; }

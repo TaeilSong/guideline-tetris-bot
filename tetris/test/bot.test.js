@@ -41,3 +41,32 @@ test('봇은 라인 완성 착수를 선호한다', () => {
   notCleared[21][0] = 'X';
   assert.ok(evaluateBoard(cleared) >= evaluateBoard(notCleared));
 });
+
+// hold가 비어 있고, 다음 조각으로 바꾸면 훨씬 좋을 때 봇이 hold를 쓰는지 검증
+test('hold가 비었을 때 다음 조각이 더 좋으면 useHold=true', () => {
+  const b = createBoard();
+  // 0~8열 4줄(18~21행) 채우고 9열은 빈 우물 → I 수직이 4줄 클리어
+  for (let y = 18; y <= 21; y++) for (let x = 0; x < 9; x++) b[y][x] = 'X';
+  // 현재 O(우물 못 채움), 다음 I(우물 채워 테트리스). hold 비어 있고 사용 가능.
+  const mv = bestMove(b, 'O', null, true, 'I');
+  assert.equal(mv.useHold, true);
+  assert.equal(mv.type, 'I');
+});
+
+// holdType이 있으면 기존처럼 hold 조각도 후보로 평가한다
+test('hold에 조각이 있으면 더 좋은 쪽을 고른다', () => {
+  const b = createBoard();
+  for (let y = 18; y <= 21; y++) for (let x = 0; x < 9; x++) b[y][x] = 'X';
+  // 현재 O, hold에 I. next는 무관(hold가 채워져 있으므로 hold 조각을 평가).
+  const mv = bestMove(b, 'O', 'I', true, 'T');
+  assert.equal(mv.useHold, true);
+  assert.equal(mv.type, 'I');
+});
+
+// hold를 쓸 수 없으면(canHold=false) 현재 조각만 놓는다
+test('canHold=false면 hold를 쓰지 않는다', () => {
+  const b = createBoard();
+  for (let y = 18; y <= 21; y++) for (let x = 0; x < 9; x++) b[y][x] = 'X';
+  const mv = bestMove(b, 'O', null, false, 'I');
+  assert.equal(mv.useHold, false);
+});
