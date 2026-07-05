@@ -1,7 +1,6 @@
 // 엔진 상태를 Canvas에 그리는 렌더러
-import { PIECES } from '../src/core/pieces.js';
+import { PIECES, getCells } from '../src/core/pieces.js';
 import { WIDTH, HEIGHT, VISIBLE } from '../src/core/board.js';
-import { getCells } from '../src/core/pieces.js';
 
 const CELL = 30;
 const HIDDEN = HEIGHT - VISIBLE; // 상단 버퍼 2행은 숨김

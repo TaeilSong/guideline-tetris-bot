@@ -82,6 +82,12 @@ export function createEngine({ seed = 0, nextCount = 5 } = {}) {
     if (ok) { engine.lastActionWasRotation = false; engine.softDropCells += 1; }
     return ok;
   };
+  // 중력용 한 칸 하강: 점수(softDropCells)를 올리지 않는다
+  engine.moveDown = function () {
+    const ok = tryMove(0, 1);
+    if (ok) engine.lastActionWasRotation = false;
+    return ok;
+  };
 
   engine.rotate = function (dir) {
     if (engine.gameOver) return false;

@@ -68,7 +68,7 @@ function loop(now) {
     } else {
       // 중력
       if (now - lastGravity >= gravityMs(engine.score.level)) {
-        if (!engine.softDrop()) {
+        if (!engine.moveDown()) {
           if (lockTimer === null) lockTimer = now;
         }
         lastGravity = now;

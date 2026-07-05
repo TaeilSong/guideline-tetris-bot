@@ -96,5 +96,7 @@ export function bestMove(board, type, holdType, canHold) {
       }
     }
   }
-  return best || { type, rotation: 0, x: 3, useHold: false };
+  return best
+    ? { type: best.type, rotation: best.rotation, x: best.x, useHold: best.useHold }
+    : { type, rotation: 0, x: 3, useHold: false };
 }

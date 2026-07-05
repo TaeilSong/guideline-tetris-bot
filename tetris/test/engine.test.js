@@ -52,3 +52,19 @@ test('여러 번 하드드롭해도 게임오버 전까지 진행된다', () => 
   while (!e.gameOver && count < 200) { e.hardDrop(); count++; }
   assert.ok(count > 0);
 });
+
+test('moveDown는 하강하지만 소프트드롭 점수를 올리지 않는다', () => {
+  const e = createEngine({ seed: 1 });
+  const before = e.softDropCells;
+  const startY = e.active.y;
+  const moved = e.moveDown();
+  assert.equal(moved, true);
+  assert.equal(e.active.y, startY + 1);
+  assert.equal(e.softDropCells, before); // 점수 누적 없음
+});
+test('softDrop은 소프트드롭 셀을 누적한다', () => {
+  const e = createEngine({ seed: 1 });
+  const before = e.softDropCells;
+  e.softDrop();
+  assert.equal(e.softDropCells, before + 1);
+});
