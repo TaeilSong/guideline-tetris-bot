@@ -27,7 +27,7 @@ test('연속 테트리스는 Back-to-Back 1.5배', () => {
   const s = createScoreState();
   applyLock({ state: s, linesCleared: 4, tspin: 'none', hardDropCells: 0, softDropCells: 0 }); // 800
   const e = applyLock({ state: s, linesCleared: 4, tspin: 'none', hardDropCells: 0, softDropCells: 0 });
-  assert.equal(e.points, 1200); // 800*1.5
+  assert.equal(e.points, 1250); // 800*1.5 + 콤보50
   assert.equal(e.backToBack, true);
 });
 

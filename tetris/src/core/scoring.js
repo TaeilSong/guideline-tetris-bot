@@ -45,7 +45,7 @@ export function applyLock({ state, linesCleared, tspin, hardDropCells, softDropC
   else state.combo = -1;
 
   const scaledBase = (b2bApplies ? Math.floor(base * 1.5) : base) * lvl;
-  const comboBonus = (linesCleared > 0 && !b2bApplies) ? 50 * Math.max(0, state.combo) * lvl : 0;
+  const comboBonus = linesCleared > 0 ? 50 * Math.max(0, state.combo) * lvl : 0;
   const dropPoints = hardDropCells * 2 + softDropCells * 1;
   const points = scaledBase + comboBonus + dropPoints;
 
